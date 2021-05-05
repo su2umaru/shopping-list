@@ -1,64 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-function Form(props) {
-  return (
-    <form onSubmit={props.handleSubmit}>
-      <label>
-        買う物：
-        <input type='text' value={props.value} onChange={props.handleChange} />
-      </label>
-      <input type='submit' value='追加' disabled={props.value ? false : true} />
-    </form>
-  );
-}
+const Form = (props) => (
+  <form onSubmit={props.handleSubmit}>
+    <label>
+      買う物：
+      <input type='text' value={props.value} onChange={props.handleChange} />
+    </label>
+    <input type='submit' value='追加' disabled={props.value ? false : true} />
+  </form>
+);
 
-function List(props) {
-  return (
-    <ul>
-      {props.items.map((item) => (
-        <li>{item}</li>
-      ))}
-    </ul>
-  );
-}
+const List = (props) => (
+  <ul>
+    {props.items.map((item) => (
+      <li>{item}</li>
+    ))}
+  </ul>
+);
 
-class ShoppingList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: '',
-      items: [],
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+function ShoppingList() {
+  const [value, setValue] = useState('');
+  const [items, setItems] = useState([]);
 
-  handleChange(e) {
-    this.setState({ value: e.target.value });
-  }
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
 
-  handleSubmit(e) {
-    const items = this.state.items.slice();
-    items.push(this.state.value);
-    this.setState({ items: items });
-    this.setState({ value: '' });
+  const handleSubmit = (e) => {
+    const items = items.slice();
+    items.push(value);
+    setItems(items);
+    setValue('');
     e.preventDefault();
-  }
+  };
 
-  render() {
-    return (
-      <div>
-        <h1>買い物リスト</h1>
-        <Form
-          handleSubmit={this.handleSubmit}
-          value={this.state.value}
-          handleChange={this.handleChange}
-        />
-        <List items={this.state.items} />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h1>買い物リスト</h1>
+      <Form
+        handleSubmit={handleSubmit}
+        value={value}
+        handleChange={handleChange}
+      />
+      <List items={items} />
+    </div>
+  );
 }
 
 ReactDOM.render(<ShoppingList />, document.getElementById('root'));
