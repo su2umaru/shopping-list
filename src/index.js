@@ -19,7 +19,7 @@ const List = (props) => (
   </ul>
 );
 
-function ShoppingList() {
+const ShoppingList = () => {
   const [value, setValue] = useState('');
   const [items, setItems] = useState([]);
 
@@ -45,6 +45,6 @@ function ShoppingList() {
       <List items={items} />
     </div>
   );
-}
+};
 
 ReactDOM.render(<ShoppingList />, document.getElementById('root'));
