@@ -28,7 +28,6 @@ function ShoppingList() {
   };
 
   const handleSubmit = (e) => {
-    const items = items.slice();
     items.push(value);
     setItems(items);
     setValue('');
